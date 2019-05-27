@@ -1,0 +1,28 @@
+{
+  "name": "curso-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "pm2 start src/index.js --name server --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/georgekaran/server_expensify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.7",
+    "nodemailer": "^6.1.1",
+    "nodemailer-express-handlebars": "^3.0.0",
+    "path": "^0.12.7",
+    "pm2": "^3.5.0"
+  }
+}
