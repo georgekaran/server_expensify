@@ -2,6 +2,8 @@ const express = require("express");
 const security = require("../utils/security");
 const mailer = require("../../modules/mailer");
 const authMiddleware = require('../middlewares/auth')
+const jwt = require('jsonwebtoken')
+const authConfig = require('../../config/auth.json')
 
 const User = require("../models/user");
 const router = express.Router();
@@ -20,7 +22,9 @@ function setCookieSession(res, token) {
 router.post("/register", async (req, res) => {
   const { email } = req.body;
   try {
+    console.log(email)
     const emailExist = await User.findOne({ email });
+    console.log(emailExist)
     if (emailExist) {
       return res.status(400).send({ error: "User already exists" });
     }
@@ -52,11 +56,15 @@ router.post("/authenticate", async (req, res) => {
 
   const token = security.generateToken({ id: user._id });
 
+  req.session.token = token;
+
+  //res.header('Authorization', 'Bearer '+ token);
+
   user.password = undefined;
 
   setCookieSession(res, token);
 
-  console.log(res)
+  //console.log(res)
   res.send({ user, token });
 });
 
@@ -66,7 +74,22 @@ router.get("/isAuthenticated", authMiddleware, async (req, res) => {
   } catch (err) {
     res.send({ isAuthenticated: false });
   }
-  
+
+});
+
+router.post("/is_token_valid", async (req, res) => {
+  try {
+    const { token } = req.body
+    console.log(req.body)
+    jwt.verify(token, authConfig.secret, (err, decoded) => {
+      if (err) return res.status(401).send({ isTokenValid: false })
+
+      req.userId = decoded.id
+      res.send({ isTokenValid: true });
+    })
+  } catch (err) {
+    res.send({ isTokenValid: false });
+  }
 });
 
 router.post("/forgot_password", async (req, res) => {

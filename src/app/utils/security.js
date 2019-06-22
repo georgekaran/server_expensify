@@ -19,9 +19,14 @@ function generateResetToken() {
   return crypto.randomBytes(20).toString("hex");
 }
 
+function generateImageToken() {
+  return crypto.randomBytes(25).toString("hex");
+}
+
 module.exports = {
   jwt_name,
   generateToken,
   comparePassword,
-  generateResetToken
+  generateResetToken,
+  generateImageToken
 };
