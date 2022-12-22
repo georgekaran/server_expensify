@@ -19,7 +19,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.5.7",
     "multer": "^1.4.1",
     "nodemailer": "^6.1.1",
